@@ -53,6 +53,36 @@
             <artifactId>liteflow-rule-sql</artifactId>
             <version>${liteflow.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.yomahub</groupId>
+            <artifactId>liteflow-script-groovy</artifactId>
+            <version>${liteflow.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yomahub</groupId>
+            <artifactId>liteflow-script-qlexpress</artifactId>
+            <version>${liteflow.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yomahub</groupId>
+            <artifactId>liteflow-script-graaljs</artifactId>
+            <version>${liteflow.version}</version>
+        </dependency>
+
+
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
