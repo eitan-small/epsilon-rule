@@ -3,6 +3,7 @@ package com.epsilon.rule.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.epsilon.rule.convert.menu.RuleMenuConvert;
 import com.epsilon.rule.domain.entity.RuleMenu;
 import com.epsilon.rule.domain.vo.RuleMenuVo;
 import com.epsilon.rule.mapper.RuleMenuMapper;
@@ -35,19 +36,15 @@ public class RuleMenuServiceImpl extends ServiceImpl<RuleMenuMapper, RuleMenu> i
     }
 
     @Override
-    public List<RuleMenuVo> selectMenuTree(String projectId) {
+    public List<RuleMenuVo> selectMenuTree(Integer projectId) {
         // 查询出项目所有的规则菜单列表
-        List<RuleMenu> ruleMenuList = new LambdaQueryChainWrapper<>(ruleMenuMapper).eq(RuleMenu::getProjectId, projectId).eq(RuleMenu::getDeleted, false).list();
+        List<RuleMenu> ruleMenuList = new LambdaQueryChainWrapper<>(ruleMenuMapper).eq(RuleMenu::getProjectId, projectId).list();
 
         return buildMenuTree(ruleMenuList);
     }
 
     private List<RuleMenuVo> buildMenuTree(List<RuleMenu> ruleMenuList) {
-        List<RuleMenuVo> menuVoList = ruleMenuList.stream().map(i -> {
-            RuleMenuVo ruleMenuVo = new RuleMenuVo();
-            BeanUtils.copyProperties(i, ruleMenuVo);
-            return ruleMenuVo;
-        }).toList();
+        List<RuleMenuVo> menuVoList = ruleMenuList.stream().map(RuleMenuConvert.INSTANCE::convert).toList();
 
         Map<Integer, RuleMenuVo> menuVoMap = menuVoList.stream().collect(Collectors.toMap(RuleMenuVo::getId, i -> i));
 

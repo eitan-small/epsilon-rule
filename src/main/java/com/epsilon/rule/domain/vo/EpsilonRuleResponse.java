@@ -2,7 +2,6 @@ package com.epsilon.rule.domain.vo;
 
 import com.epsilon.rule.context.InputContext;
 import com.epsilon.rule.context.OutputContext;
-import com.epsilon.rule.domain.StepDetail;
 import lombok.Data;
 
 import java.io.Serial;

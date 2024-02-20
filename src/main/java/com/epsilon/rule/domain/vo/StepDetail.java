@@ -1,4 +1,4 @@
-package com.epsilon.rule.domain;
+package com.epsilon.rule.domain.vo;
 
 import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.enums.CmpStepTypeEnum;

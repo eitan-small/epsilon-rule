@@ -17,5 +17,5 @@ import java.util.List;
  */
 public interface IRuleMenuService extends IService<RuleMenu> {
 
-    List<RuleMenuVo> selectMenuTree(String projectId);
+    List<RuleMenuVo> selectMenuTree(Integer projectId);
 }

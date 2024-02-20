@@ -3,7 +3,7 @@ package com.epsilon.rule.service.impl;
 import com.epsilon.rule.context.InputContext;
 import com.epsilon.rule.context.OutputContext;
 import com.epsilon.rule.domain.CommonResult;
-import com.epsilon.rule.domain.StepDetail;
+import com.epsilon.rule.domain.vo.StepDetail;
 import com.epsilon.rule.domain.vo.EpsilonRuleRequest;
 import com.epsilon.rule.domain.vo.EpsilonRuleResponse;
 import com.epsilon.rule.service.IEpsilonRuleService;

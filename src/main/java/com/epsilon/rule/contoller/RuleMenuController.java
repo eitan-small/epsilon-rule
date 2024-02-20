@@ -30,7 +30,7 @@ public class RuleMenuController {
     }
 
     @GetMapping("/tree")
-    public CommonResult<List<RuleMenuVo>> selectMenuTree(@RequestParam("projectId") String projectId) {
+    public CommonResult<List<RuleMenuVo>> selectMenuTree(@RequestParam("projectId") Integer projectId) {
         return CommonResult.success(ruleMenuService.selectMenuTree(projectId));
     }
 }

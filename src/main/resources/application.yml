@@ -7,6 +7,10 @@ spring:
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 liteflow:
   rule-source-ext-data-map:
     applicationName: epsilon-rule
