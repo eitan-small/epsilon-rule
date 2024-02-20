@@ -3,8 +3,15 @@ package com.epsilon.rule.domain.vo;
 import com.epsilon.rule.context.InputContext;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Data
-public class EpsilonRuleRequest {
+public class EpsilonRuleRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     /**
      * 规则链ID
      */

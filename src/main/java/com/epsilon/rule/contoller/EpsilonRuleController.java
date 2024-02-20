@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/epsilon/rule")
 public class EpsilonRuleController {
-    private IEpsilonRuleService epsilonRuleService;
+    private final IEpsilonRuleService epsilonRuleService;
 
     @Autowired
     public EpsilonRuleController(IEpsilonRuleService epsilonRuleService) {

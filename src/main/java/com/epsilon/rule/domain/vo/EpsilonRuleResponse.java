@@ -5,10 +5,16 @@ import com.epsilon.rule.context.OutputContext;
 import com.epsilon.rule.domain.StepDetail;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Queue;
 
 @Data
-public class EpsilonRuleResponse {
+public class EpsilonRuleResponse implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     /**
      * 输出上下文
      */
