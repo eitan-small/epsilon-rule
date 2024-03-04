@@ -7,10 +7,7 @@ import com.epsilon.rule.domain.vo.EpsilonRuleResponse;
 import com.epsilon.rule.service.IEpsilonRuleService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/epsilon/rule")
@@ -31,5 +28,10 @@ public class EpsilonRuleController {
     public CommonResult<String> updateGraph(@RequestBody EpsilonGraphVo epsilonGraph) {
         epsilonRuleService.updateGraph(epsilonGraph);
         return CommonResult.success();
+    }
+
+    @GetMapping("/selectGraph")
+    public CommonResult<EpsilonGraphVo> selectGraph(@RequestParam("ruleId") Integer ruleId) {
+        return CommonResult.success(epsilonRuleService.selectGraph(ruleId));
     }
 }

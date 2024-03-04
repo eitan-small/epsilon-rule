@@ -11,4 +11,6 @@ public interface IEpsilonRuleService extends IService<EpsilonRule> {
     CommonResult<EpsilonRuleResponse> execute(EpsilonRuleRequest request);
 
     void updateGraph(EpsilonGraphVo epsilonGraph);
+
+    EpsilonGraphVo selectGraph(Integer ruleId);
 }

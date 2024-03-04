@@ -109,4 +109,18 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         nodeService.saveBatch(nodeList);
         edgeService.saveBatch(edgeList);
     }
+
+    @Override
+    public EpsilonGraphVo selectGraph(Integer ruleId) {
+        // 查询节点和边
+        List<EpsilonNode> nodeList = nodeService.list(new LambdaQueryWrapper<EpsilonNode>().eq(EpsilonNode::getRuleId, ruleId));
+        List<EpsilonEdge> edgeList = edgeService.list(new LambdaQueryWrapper<EpsilonEdge>().eq(EpsilonEdge::getRuleId, ruleId));
+
+        // 转化为 EpsilonGraphVo 对象
+        EpsilonGraphVo epsilonGraph = new EpsilonGraphVo();
+        epsilonGraph.setRuleId(ruleId);
+        epsilonGraph.setNodes(nodeList.stream().map(EpsilonNodeConvert.INSTANCE::convert).toList());
+        epsilonGraph.setEdges(edgeList.stream().map(EpsilonEdgeConvert.INSTANCE::convert).toList());
+        return epsilonGraph;
+    }
 }
