@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 127.0.0.1
+ Source Server         : localhost
  Source Server Type    : MySQL
  Source Server Version : 80034
- Source Host           : 127.0.0.1:3306
+ Source Host           : localhost:3306
  Source Schema         : epsilon_rule
 
  Target Server Type    : MySQL
  Target Server Version : 80034
  File Encoding         : 65001
 
- Date: 04/03/2024 19:30:58
+ Date: 05/03/2024 00:02:42
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,7 @@ CREATE TABLE `epsilon_chain`  (
   `create_time` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `enable` tinyint(1) NULL DEFAULT 1 COMMENT '是否启用，默认为1（启用）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of epsilon_chain
@@ -52,17 +52,16 @@ CREATE TABLE `epsilon_edge`  (
   `updated_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '更新人',
   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`edge_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of epsilon_edge
 -- ----------------------------
-INSERT INTO `epsilon_edge` VALUES ('12d798c4-0717-4da1-acd9-9eddfa655402', 1, '94a06862-9f48-4d73-88fd-f56f722d51d5', '63e08af1-2961-4e05-b523-456011337edb', NULL, NULL, NULL, NULL, 0);
-INSERT INTO `epsilon_edge` VALUES ('7a4ce01c-24fd-4f33-bf5e-f7fcff6339d8', 1, '94a06862-9f48-4d73-88fd-f56f722d51d5', 'ad8c02d4-9116-49b1-8022-276686b9e8e9', NULL, NULL, NULL, NULL, 0);
-INSERT INTO `epsilon_edge` VALUES ('9303c338-8588-479b-b818-86d9242968a2', 1, 'ad8c02d4-9116-49b1-8022-276686b9e8e9', 'e0508d22-5f7b-4c68-ad18-54889162fb9c', NULL, NULL, NULL, NULL, 0);
-INSERT INTO `epsilon_edge` VALUES ('b3c6953a-2416-428c-bb88-a133a282a115', 1, 'c9f9f386-8cbf-40f4-b230-cb5b8746fca2', '94a06862-9f48-4d73-88fd-f56f722d51d5', NULL, NULL, NULL, NULL, 0);
-INSERT INTO `epsilon_edge` VALUES ('ee19fd29-a73d-40b8-8efd-ef5eb50fff55', 1, '63e08af1-2961-4e05-b523-456011337edb', 'e0508d22-5f7b-4c68-ad18-54889162fb9c', NULL, NULL, NULL, NULL, 0);
-INSERT INTO `epsilon_edge` VALUES ('fbc93381-dc57-493f-85ce-5694d5637c68', 2, '51074b05-e381-4595-b13c-abce0df1d68a', 'deaa9821-8fc2-405d-8d4e-34634fc41a59', NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_edge` VALUES ('5f4ab6cf-2b79-4479-8d0f-f533bd24ea5d', 1, '01cecbb5-c4a3-4907-bfb8-1d4e6341277c', '39339b94-f3e2-41b9-ae34-cae1746613b3', NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_edge` VALUES ('87f3016a-d9dc-4319-8dd5-6bbb2ca0bee5', 2, '6adc3e85-cc8c-4b57-b291-48a8b0f9616b', 'b53b0e7e-9d6e-4d1a-b3ff-87e2c1af4df9', NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_edge` VALUES ('a6bc5a6a-16af-4ca6-9796-2f11147aeefc', 1, '39339b94-f3e2-41b9-ae34-cae1746613b3', '5e04b16d-6ff9-4ae9-88f5-dfae0e5cfc61', NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_edge` VALUES ('e896b377-5888-44aa-995c-1a39f3c23eb4', 1, 'f6918a14-c27f-4fbe-be74-52aa4a20f14d', '01cecbb5-c4a3-4907-bfb8-1d4e6341277c', NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_edge` VALUES ('eea1a080-5fd5-4098-a37b-e131267402ac', 1, '01cecbb5-c4a3-4907-bfb8-1d4e6341277c', '5e04b16d-6ff9-4ae9-88f5-dfae0e5cfc61', NULL, NULL, NULL, NULL, 0);
 
 -- ----------------------------
 -- Table structure for epsilon_node
@@ -82,18 +81,17 @@ CREATE TABLE `epsilon_node`  (
   `updated_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '更新人',
   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`node_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of epsilon_node
 -- ----------------------------
-INSERT INTO `epsilon_node` VALUES ('51074b05-e381-4595-b13c-abce0df1d68a', 2, 'start-node', NULL, 130.00, 150.00, NULL, NULL, NULL, NULL, NULL, 0);
-INSERT INTO `epsilon_node` VALUES ('63e08af1-2961-4e05-b523-456011337edb', 1, 'calculate-node', NULL, 580.00, 180.00, NULL, NULL, NULL, NULL, NULL, 0);
-INSERT INTO `epsilon_node` VALUES ('94a06862-9f48-4d73-88fd-f56f722d51d5', 1, 'switch-node', NULL, 320.00, 100.00, NULL, NULL, NULL, NULL, NULL, 0);
-INSERT INTO `epsilon_node` VALUES ('ad8c02d4-9116-49b1-8022-276686b9e8e9', 1, 'calculate-node', NULL, 580.00, 100.00, 'hello world', NULL, NULL, NULL, NULL, 0);
-INSERT INTO `epsilon_node` VALUES ('c9f9f386-8cbf-40f4-b230-cb5b8746fca2', 1, 'start-node', NULL, 80.00, 100.00, '', NULL, NULL, NULL, NULL, 0);
-INSERT INTO `epsilon_node` VALUES ('deaa9821-8fc2-405d-8d4e-34634fc41a59', 2, 'end-node', NULL, 440.00, 150.00, NULL, NULL, NULL, NULL, NULL, 0);
-INSERT INTO `epsilon_node` VALUES ('e0508d22-5f7b-4c68-ad18-54889162fb9c', 1, 'end-node', NULL, 920.00, 100.00, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_node` VALUES ('01cecbb5-c4a3-4907-bfb8-1d4e6341277c', 1, 'switch-node', '测试条件分支', 400.00, 240.00, 'hello world', NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_node` VALUES ('39339b94-f3e2-41b9-ae34-cae1746613b3', 1, 'calculate-node', '赋值运算节点', 680.00, 320.00, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_node` VALUES ('5e04b16d-6ff9-4ae9-88f5-dfae0e5cfc61', 1, 'end-node', '结束节点', 980.00, 240.00, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_node` VALUES ('6adc3e85-cc8c-4b57-b291-48a8b0f9616b', 2, 'start-node', '开始节点', 170.00, 110.00, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_node` VALUES ('b53b0e7e-9d6e-4d1a-b3ff-87e2c1af4df9', 2, 'end-node', '结束节点', 500.00, 110.00, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_node` VALUES ('f6918a14-c27f-4fbe-be74-52aa4a20f14d', 1, 'start-node', '开始节点', 110.00, 240.00, NULL, NULL, NULL, NULL, NULL, 0);
 
 -- ----------------------------
 -- Table structure for epsilon_rule
@@ -109,7 +107,7 @@ CREATE TABLE `epsilon_rule`  (
   `updated_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '更新人',
   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`rule_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of epsilon_rule
@@ -132,7 +130,7 @@ CREATE TABLE `epsilon_script`  (
   `create_time` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `enable` tinyint(1) NULL DEFAULT 1 COMMENT '是否启用，默认为1（启用）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of epsilon_script
@@ -158,7 +156,7 @@ CREATE TABLE `rule_menu`  (
   `updated_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '更新人',
   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rule_menu
