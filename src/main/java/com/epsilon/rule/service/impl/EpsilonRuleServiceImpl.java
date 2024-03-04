@@ -1,29 +1,48 @@
 package com.epsilon.rule.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.epsilon.rule.context.InputContext;
 import com.epsilon.rule.context.OutputContext;
+import com.epsilon.rule.convert.edge.EpsilonEdgeConvert;
+import com.epsilon.rule.convert.node.EpsilonNodeConvert;
 import com.epsilon.rule.domain.CommonResult;
+import com.epsilon.rule.domain.entity.EpsilonEdge;
+import com.epsilon.rule.domain.entity.EpsilonNode;
+import com.epsilon.rule.domain.entity.EpsilonRule;
+import com.epsilon.rule.domain.vo.EpsilonGraphVo;
 import com.epsilon.rule.domain.vo.StepDetail;
 import com.epsilon.rule.domain.vo.EpsilonRuleRequest;
 import com.epsilon.rule.domain.vo.EpsilonRuleResponse;
+import com.epsilon.rule.mapper.EpsilonRuleMapper;
+import com.epsilon.rule.service.IEpsilonEdgeService;
+import com.epsilon.rule.service.IEpsilonNodeService;
 import com.epsilon.rule.service.IEpsilonRuleService;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
 import com.yomahub.liteflow.flow.entity.CmpStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
 @Service
-public class EpsilonRuleServiceImpl implements IEpsilonRuleService {
-    private FlowExecutor flowExecutor;
+public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, EpsilonRule> implements IEpsilonRuleService {
+    private final FlowExecutor flowExecutor;
+
+    private final IEpsilonNodeService nodeService;
+
+    private final IEpsilonEdgeService edgeService;
 
     @Autowired
-    public EpsilonRuleServiceImpl(FlowExecutor flowExecutor) {
+    public EpsilonRuleServiceImpl(FlowExecutor flowExecutor, IEpsilonNodeService nodeService, IEpsilonEdgeService edgeService) {
         this.flowExecutor = flowExecutor;
+        this.nodeService = nodeService;
+        this.edgeService = edgeService;
     }
 
     @Override
@@ -73,5 +92,21 @@ public class EpsilonRuleServiceImpl implements IEpsilonRuleService {
         }
 
         return CommonResult.success(epsilonRuleResponse);
+    }
+
+    @Override
+    @Transactional
+    public void updateGraph(EpsilonGraphVo epsilonGraph) {
+        Integer ruleId = epsilonGraph.getRuleId();
+        List<EpsilonNode> nodeList = epsilonGraph.getNodes().stream().map(EpsilonNodeConvert.INSTANCE::convert).toList();
+        List<EpsilonEdge> edgeList = epsilonGraph.getEdges().stream().map(EpsilonEdgeConvert.INSTANCE::convert).toList();
+
+        // 先删除旧数据
+        nodeService.remove(new LambdaQueryWrapper<EpsilonNode>().eq(EpsilonNode::getRuleId, ruleId));
+        edgeService.remove(new LambdaQueryWrapper<EpsilonEdge>().eq(EpsilonEdge::getRuleId, ruleId));
+
+        // 添加新数据
+        nodeService.saveBatch(nodeList);
+        edgeService.saveBatch(edgeList);
     }
 }

@@ -1,9 +1,11 @@
 package com.epsilon.rule.contoller;
 
 import com.epsilon.rule.domain.CommonResult;
+import com.epsilon.rule.domain.vo.EpsilonGraphVo;
 import com.epsilon.rule.domain.vo.EpsilonRuleRequest;
 import com.epsilon.rule.domain.vo.EpsilonRuleResponse;
 import com.epsilon.rule.service.IEpsilonRuleService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,5 +25,11 @@ public class EpsilonRuleController {
     @PostMapping("/execute")
     public CommonResult<EpsilonRuleResponse> execute(@RequestBody EpsilonRuleRequest request) {
         return epsilonRuleService.execute(request);
+    }
+
+    @PostMapping("/updateGraph")
+    public CommonResult<String> updateGraph(@RequestBody EpsilonGraphVo epsilonGraph) {
+        epsilonRuleService.updateGraph(epsilonGraph);
+        return CommonResult.success();
     }
 }

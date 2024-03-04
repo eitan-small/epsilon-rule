@@ -21,10 +21,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @TableName("rule_menu")
-public class RuleMenu extends BaseEntity implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class RuleMenu extends BaseEntity {
 
     /**
      * 菜单ID
@@ -48,9 +45,9 @@ public class RuleMenu extends BaseEntity implements Serializable {
     private String menuType;
 
     /**
-     * 规则链名称
+     * 规则ID，关联到特定的规则
      */
-    private String chainName;
+    private Integer ruleId;
 
     /**
      * 父菜单ID，指向上级菜单的ID
