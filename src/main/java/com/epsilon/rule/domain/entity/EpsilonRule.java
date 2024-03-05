@@ -32,4 +32,14 @@ public class EpsilonRule extends BaseEntity {
      * 规则描述
      */
     private String ruleDesc;
+
+    /**
+     * 是否启用，默认为0（未启用）
+     */
+    private Boolean enable;
+
+    /**
+     * 是否校验，默认为0（未校验）
+     */
+    private Boolean validated;
 }

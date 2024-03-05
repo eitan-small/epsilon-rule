@@ -10,10 +10,8 @@ import com.epsilon.rule.domain.CommonResult;
 import com.epsilon.rule.domain.entity.EpsilonEdge;
 import com.epsilon.rule.domain.entity.EpsilonNode;
 import com.epsilon.rule.domain.entity.EpsilonRule;
-import com.epsilon.rule.domain.vo.EpsilonGraphVo;
-import com.epsilon.rule.domain.vo.StepDetail;
-import com.epsilon.rule.domain.vo.EpsilonRuleRequest;
-import com.epsilon.rule.domain.vo.EpsilonRuleResponse;
+import com.epsilon.rule.domain.vo.*;
+import com.epsilon.rule.exception.ServiceException;
 import com.epsilon.rule.mapper.EpsilonRuleMapper;
 import com.epsilon.rule.service.IEpsilonEdgeService;
 import com.epsilon.rule.service.IEpsilonNodeService;
@@ -24,6 +22,7 @@ import com.yomahub.liteflow.flow.entity.CmpStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -98,6 +97,11 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
     @Transactional
     public void updateGraph(EpsilonGraphVo epsilonGraph) {
         Integer ruleId = epsilonGraph.getRuleId();
+        EpsilonRule rule = getOne(new LambdaQueryWrapper<EpsilonRule>().eq(EpsilonRule::getRuleId, ruleId));
+        if (rule == null || rule.getEnable()) {
+            throw new ServiceException("规则不存在或规则正在启用中！");
+        }
+
         List<EpsilonNode> nodeList = epsilonGraph.getNodes().stream().map(EpsilonNodeConvert.INSTANCE::convert).toList();
         List<EpsilonEdge> edgeList = epsilonGraph.getEdges().stream().map(EpsilonEdgeConvert.INSTANCE::convert).toList();
 
@@ -122,5 +126,12 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         epsilonGraph.setNodes(nodeList.stream().map(EpsilonNodeConvert.INSTANCE::convert).toList());
         epsilonGraph.setEdges(edgeList.stream().map(EpsilonEdgeConvert.INSTANCE::convert).toList());
         return epsilonGraph;
+    }
+
+    @Override
+    public EpsilonRuleVo selectRule(Integer ruleId) {
+        EpsilonRule rule = getById(ruleId);
+
+        return null;
     }
 }

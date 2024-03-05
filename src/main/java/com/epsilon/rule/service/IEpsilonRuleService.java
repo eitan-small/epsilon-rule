@@ -6,6 +6,7 @@ import com.epsilon.rule.domain.entity.EpsilonRule;
 import com.epsilon.rule.domain.vo.EpsilonGraphVo;
 import com.epsilon.rule.domain.vo.EpsilonRuleRequest;
 import com.epsilon.rule.domain.vo.EpsilonRuleResponse;
+import com.epsilon.rule.domain.vo.EpsilonRuleVo;
 
 public interface IEpsilonRuleService extends IService<EpsilonRule> {
     CommonResult<EpsilonRuleResponse> execute(EpsilonRuleRequest request);
@@ -13,4 +14,6 @@ public interface IEpsilonRuleService extends IService<EpsilonRule> {
     void updateGraph(EpsilonGraphVo epsilonGraph);
 
     EpsilonGraphVo selectGraph(Integer ruleId);
+
+    EpsilonRuleVo selectRule(Integer ruleId);
 }
