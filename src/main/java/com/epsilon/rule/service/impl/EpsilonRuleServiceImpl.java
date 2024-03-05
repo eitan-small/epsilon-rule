@@ -6,23 +6,25 @@ import com.epsilon.rule.context.InputContext;
 import com.epsilon.rule.context.OutputContext;
 import com.epsilon.rule.convert.edge.EpsilonEdgeConvert;
 import com.epsilon.rule.convert.node.EpsilonNodeConvert;
+import com.epsilon.rule.convert.rule.EpsilonRuleConvert;
 import com.epsilon.rule.domain.CommonResult;
 import com.epsilon.rule.domain.entity.EpsilonEdge;
 import com.epsilon.rule.domain.entity.EpsilonNode;
 import com.epsilon.rule.domain.entity.EpsilonRule;
+import com.epsilon.rule.domain.entity.RuleMenu;
 import com.epsilon.rule.domain.vo.*;
 import com.epsilon.rule.exception.ServiceException;
 import com.epsilon.rule.mapper.EpsilonRuleMapper;
 import com.epsilon.rule.service.IEpsilonEdgeService;
 import com.epsilon.rule.service.IEpsilonNodeService;
 import com.epsilon.rule.service.IEpsilonRuleService;
+import com.epsilon.rule.service.IRuleMenuService;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
 import com.yomahub.liteflow.flow.entity.CmpStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,11 +39,14 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
 
     private final IEpsilonEdgeService edgeService;
 
+    private final IRuleMenuService ruleMenuService;
+
     @Autowired
-    public EpsilonRuleServiceImpl(FlowExecutor flowExecutor, IEpsilonNodeService nodeService, IEpsilonEdgeService edgeService) {
+    public EpsilonRuleServiceImpl(FlowExecutor flowExecutor, IEpsilonNodeService nodeService, IEpsilonEdgeService edgeService, IRuleMenuService ruleMenuService) {
         this.flowExecutor = flowExecutor;
         this.nodeService = nodeService;
         this.edgeService = edgeService;
+        this.ruleMenuService = ruleMenuService;
     }
 
     @Override
@@ -131,7 +136,17 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
     @Override
     public EpsilonRuleVo selectRule(Integer ruleId) {
         EpsilonRule rule = getById(ruleId);
+        if (rule == null) {
+            return null;
+        }
+        EpsilonRuleVo ruleVo = EpsilonRuleConvert.INSTANCE.convert(rule);
 
-        return null;
+        // 查询规则菜单
+        RuleMenu ruleMenu = ruleMenuService.selectRuleMenu(ruleId);
+        if (ruleMenu != null) {
+            ruleVo.setMenuName(ruleMenu.getMenuName());
+        }
+
+        return ruleVo;
     }
 }

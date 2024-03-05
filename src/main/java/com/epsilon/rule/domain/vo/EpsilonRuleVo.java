@@ -11,6 +11,11 @@ public class EpsilonRuleVo {
     private Integer ruleId;
 
     /**
+     * 菜单名称
+     */
+    private String menuName;
+
+    /**
      * 规则链名称
      */
     private String chainName;

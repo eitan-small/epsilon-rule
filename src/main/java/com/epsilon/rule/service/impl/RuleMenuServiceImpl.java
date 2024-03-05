@@ -43,6 +43,11 @@ public class RuleMenuServiceImpl extends ServiceImpl<RuleMenuMapper, RuleMenu> i
         return buildMenuTree(ruleMenuList);
     }
 
+    @Override
+    public RuleMenu selectRuleMenu(Integer ruleId) {
+        return new LambdaQueryChainWrapper<>(ruleMenuMapper).eq(RuleMenu::getRuleId, ruleId).one();
+    }
+
     private List<RuleMenuVo> buildMenuTree(List<RuleMenu> ruleMenuList) {
         List<RuleMenuVo> menuVoList = ruleMenuList.stream().map(RuleMenuConvert.INSTANCE::convert).toList();
 

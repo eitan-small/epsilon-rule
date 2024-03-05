@@ -18,4 +18,6 @@ import java.util.List;
 public interface IRuleMenuService extends IService<RuleMenu> {
 
     List<RuleMenuVo> selectMenuTree(Integer projectId);
+
+    RuleMenu selectRuleMenu(Integer ruleId);
 }
