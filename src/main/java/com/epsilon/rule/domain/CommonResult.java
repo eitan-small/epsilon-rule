@@ -61,6 +61,10 @@ public class CommonResult<T> implements Serializable {
         return restResult(null, code, msg);
     }
 
+    public static <T> CommonResult<T> error(T data, String msg) {
+        return restResult(data, ERROR, msg);
+    }
+
     private static <T> CommonResult<T> restResult(T data, int code, String msg) {
         CommonResult<T> apiResult = new CommonResult<>();
         apiResult.setCode(code);

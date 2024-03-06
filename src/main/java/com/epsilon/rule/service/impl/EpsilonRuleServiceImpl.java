@@ -53,6 +53,7 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
 
     @Override
     public CommonResult<EpsilonRuleResponse> execute(EpsilonRuleRequest request) {
+        EpsilonRuleResponse epsilonRuleResponse = new EpsilonRuleResponse();
         // 执行规则链
         InputContext inputContext = request.getData();
         if (inputContext == null) {
@@ -64,31 +65,17 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         // 规则链执行失败
         if (!liteflowResponse.isSuccess()) {
             Exception exception = liteflowResponse.getCause();
-            return CommonResult.error(exception.getMessage());
+            LinkedList<StepDetail> stepDetails = getStepDetails(liteflowResponse);
+            epsilonRuleResponse.setStepDetail(stepDetails);
+            return CommonResult.error(epsilonRuleResponse, exception.getMessage());
         }
 
         // 规则链执行成功
-        EpsilonRuleResponse epsilonRuleResponse = new EpsilonRuleResponse();
         epsilonRuleResponse.setContext(liteflowResponse.getContextBean(OutputContext.class));
 
         // 是否获取规则执行步骤详情
         if (request.getGetStepDetail() != null && request.getGetStepDetail()) {
-            Queue<CmpStep> stepQueue = liteflowResponse.getExecuteStepQueue();
-            // 转化为 Queue<StepDetail> 对象
-            LinkedList<StepDetail> stepDetails = stepQueue.stream().map(step -> {
-                StepDetail stepDetail = new StepDetail();
-                stepDetail.setNodeId(step.getNodeId());
-                stepDetail.setNodeName(step.getNodeName());
-                stepDetail.setTag(step.getTag());
-                stepDetail.setStepType(step.getStepType());
-                stepDetail.setStartTime(step.getStartTime());
-                stepDetail.setEndTime(step.getEndTime());
-                stepDetail.setTimeSpent(step.getTimeSpent());
-                stepDetail.setSuccess(step.isSuccess());
-                stepDetail.setException(step.getException());
-                stepDetail.setRollbackTimeSpent(step.getRollbackTimeSpent());
-                return stepDetail;
-            }).collect(Collectors.toCollection(LinkedList::new));
+            LinkedList<StepDetail> stepDetails = getStepDetails(liteflowResponse);
             epsilonRuleResponse.setStepDetail(stepDetails);
         }
 
@@ -98,6 +85,25 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         }
 
         return CommonResult.success(epsilonRuleResponse);
+    }
+
+    private static LinkedList<StepDetail> getStepDetails(LiteflowResponse liteflowResponse) {
+        Queue<CmpStep> stepQueue = liteflowResponse.getExecuteStepQueue();
+        // 转化为 Queue<StepDetail> 对象
+        return stepQueue.stream().map(step -> {
+            StepDetail stepDetail = new StepDetail();
+            stepDetail.setNodeId(step.getNodeId());
+            stepDetail.setNodeName(step.getNodeName());
+            stepDetail.setTag(step.getTag());
+            stepDetail.setStepType(step.getStepType());
+            stepDetail.setStartTime(step.getStartTime());
+            stepDetail.setEndTime(step.getEndTime());
+            stepDetail.setTimeSpent(step.getTimeSpent());
+            stepDetail.setSuccess(step.isSuccess());
+            stepDetail.setException(step.getException());
+            stepDetail.setRollbackTimeSpent(step.getRollbackTimeSpent());
+            return stepDetail;
+        }).collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
