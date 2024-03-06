@@ -1,14 +1,13 @@
 package com.epsilon.rule.contoller;
 
 import com.epsilon.rule.domain.CommonResult;
-import com.epsilon.rule.domain.vo.EpsilonGraphVo;
-import com.epsilon.rule.domain.vo.EpsilonRuleRequest;
-import com.epsilon.rule.domain.vo.EpsilonRuleResponse;
-import com.epsilon.rule.domain.vo.EpsilonRuleVo;
+import com.epsilon.rule.domain.vo.*;
 import com.epsilon.rule.service.IEpsilonRuleService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/epsilon/rule")
@@ -39,5 +38,11 @@ public class EpsilonRuleController {
     @GetMapping("/select")
     public CommonResult<EpsilonRuleVo> selectRule(@RequestParam("ruleId") Integer ruleId) {
         return CommonResult.success(epsilonRuleService.selectRule(ruleId));
+    }
+
+
+    @PostMapping("saveOrUpdate")
+    public CommonResult<RuleMenuVo> saveOrUpdateRule(@RequestBody EpsilonRuleVo epsilonRule) {
+        return CommonResult.success(epsilonRuleService.saveOrUpdateRule(epsilonRule));
     }
 }

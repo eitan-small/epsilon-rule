@@ -40,7 +40,7 @@ public class RuleMenu extends BaseEntity {
     private String menuName;
 
     /**
-     * 菜单类型 1:目录 | 2:名称
+     * 菜单类型 1:目录 | 2:文件
      */
     private String menuType;
 

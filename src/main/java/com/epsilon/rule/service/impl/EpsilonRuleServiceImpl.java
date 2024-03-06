@@ -1,10 +1,13 @@
 package com.epsilon.rule.service.impl;
 
+import cn.hutool.core.lang.UUID;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.epsilon.rule.context.InputContext;
 import com.epsilon.rule.context.OutputContext;
 import com.epsilon.rule.convert.edge.EpsilonEdgeConvert;
+import com.epsilon.rule.convert.menu.RuleMenuConvert;
 import com.epsilon.rule.convert.node.EpsilonNodeConvert;
 import com.epsilon.rule.convert.rule.EpsilonRuleConvert;
 import com.epsilon.rule.domain.CommonResult;
@@ -13,6 +16,7 @@ import com.epsilon.rule.domain.entity.EpsilonNode;
 import com.epsilon.rule.domain.entity.EpsilonRule;
 import com.epsilon.rule.domain.entity.RuleMenu;
 import com.epsilon.rule.domain.vo.*;
+import com.epsilon.rule.enums.MenuTypeEnum;
 import com.epsilon.rule.exception.ServiceException;
 import com.epsilon.rule.mapper.EpsilonRuleMapper;
 import com.epsilon.rule.service.IEpsilonEdgeService;
@@ -26,9 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -145,8 +147,46 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         RuleMenu ruleMenu = ruleMenuService.selectRuleMenu(ruleId);
         if (ruleMenu != null) {
             ruleVo.setMenuName(ruleMenu.getMenuName());
+            ruleVo.setProjectId(ruleMenu.getProjectId());
         }
 
         return ruleVo;
+    }
+
+    @Override
+    @Transactional
+    public RuleMenuVo saveOrUpdateRule(EpsilonRuleVo epsilonRule) {
+        Map<String, Object> resp = new HashMap<>();
+
+        Integer ruleId = epsilonRule.getRuleId();
+        if (ruleId == null) {
+            // 新建规则和目录
+            EpsilonRule rule = new EpsilonRule();
+            rule.setChainName(epsilonRule.getChainName());
+            rule.setRuleDesc(epsilonRule.getRuleDesc());
+            save(rule);
+
+            RuleMenu ruleMenu = new RuleMenu();
+
+            ruleMenu.setProjectId(epsilonRule.getProjectId());
+            ruleMenu.setMenuName(epsilonRule.getMenuName());
+            ruleMenu.setMenuType(MenuTypeEnum.FILE.getKey());
+            ruleMenu.setRuleId(rule.getRuleId());
+            ruleMenuService.save(ruleMenu);
+
+            return RuleMenuConvert.INSTANCE.convert(ruleMenu);
+        }
+
+        EpsilonRule rule = getById(ruleId);
+        rule.setRuleDesc(epsilonRule.getRuleDesc());
+        rule.setEnable(epsilonRule.getEnable());
+        updateById(rule);
+
+        LambdaQueryWrapper<RuleMenu> queryWrapper = new LambdaQueryWrapper<RuleMenu>()
+                .eq(RuleMenu::getRuleId, epsilonRule.getRuleId()).last("LIMIT 1");
+        RuleMenu ruleMenu = ruleMenuService.getOne(queryWrapper);
+        ruleMenu.setMenuName(epsilonRule.getMenuName());
+        ruleMenuService.updateById(ruleMenu);
+        return RuleMenuConvert.INSTANCE.convert(ruleMenu);
     }
 }
