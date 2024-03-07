@@ -1,6 +1,5 @@
 package com.epsilon.rule.service.impl;
 
-import cn.hutool.core.lang.UUID;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -11,18 +10,14 @@ import com.epsilon.rule.convert.menu.RuleMenuConvert;
 import com.epsilon.rule.convert.node.EpsilonNodeConvert;
 import com.epsilon.rule.convert.rule.EpsilonRuleConvert;
 import com.epsilon.rule.domain.CommonResult;
-import com.epsilon.rule.domain.entity.EpsilonEdge;
-import com.epsilon.rule.domain.entity.EpsilonNode;
-import com.epsilon.rule.domain.entity.EpsilonRule;
-import com.epsilon.rule.domain.entity.RuleMenu;
+import com.epsilon.rule.domain.entity.*;
 import com.epsilon.rule.domain.vo.*;
 import com.epsilon.rule.enums.MenuTypeEnum;
+import com.epsilon.rule.enums.NodeTypeEnum;
 import com.epsilon.rule.exception.ServiceException;
 import com.epsilon.rule.mapper.EpsilonRuleMapper;
-import com.epsilon.rule.service.IEpsilonEdgeService;
-import com.epsilon.rule.service.IEpsilonNodeService;
-import com.epsilon.rule.service.IEpsilonRuleService;
-import com.epsilon.rule.service.IRuleMenuService;
+import com.epsilon.rule.parser.EpsilonGraphParser;
+import com.epsilon.rule.service.*;
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
 import com.yomahub.liteflow.flow.entity.CmpStep;
@@ -43,12 +38,18 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
 
     private final IRuleMenuService ruleMenuService;
 
+    private final IEpsilonChainService chainService;
+
+    private final IEpsilonScriptService scriptService;
+
     @Autowired
-    public EpsilonRuleServiceImpl(FlowExecutor flowExecutor, IEpsilonNodeService nodeService, IEpsilonEdgeService edgeService, IRuleMenuService ruleMenuService) {
+    public EpsilonRuleServiceImpl(FlowExecutor flowExecutor, IEpsilonNodeService nodeService, IEpsilonEdgeService edgeService, IRuleMenuService ruleMenuService, IEpsilonChainService chainService, IEpsilonScriptService scriptService) {
         this.flowExecutor = flowExecutor;
         this.nodeService = nodeService;
         this.edgeService = edgeService;
         this.ruleMenuService = ruleMenuService;
+        this.chainService = chainService;
+        this.scriptService = scriptService;
     }
 
     @Override
@@ -186,6 +187,20 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         EpsilonRule rule = getById(ruleId);
         rule.setRuleDesc(epsilonRule.getRuleDesc());
         rule.setEnable(epsilonRule.getEnable());
+        // 将规则停用时
+        if (!epsilonRule.getEnable()) {
+            // 重置校验状态
+            rule.setValidated(false);
+            // 删除 epsilonChain
+            chainService.remove(new LambdaQueryWrapper<EpsilonChain>().eq(EpsilonChain::getChainName, rule.getChainName()));
+            // 删除 epsilonScript
+            List<String> nodeIdList = nodeService.list(new LambdaQueryWrapper<EpsilonNode>().eq(EpsilonNode::getRuleId, ruleId))
+                    .stream().filter(i -> !NodeTypeEnum.STARTNODE.getKey().equals(i.getShape())).map(i -> i.getNodeId()).toList();
+            scriptService.remove(new LambdaQueryWrapper<EpsilonScript>().in(EpsilonScript::getScriptId, nodeIdList));
+        } else {
+            chainService.update(new LambdaUpdateWrapper<EpsilonChain>().eq(EpsilonChain::getChainName, rule.getChainName())
+                    .set(EpsilonChain::getEnable, true));
+        }
         updateById(rule);
 
         LambdaQueryWrapper<RuleMenu> queryWrapper = new LambdaQueryWrapper<RuleMenu>()
@@ -194,5 +209,32 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         ruleMenu.setMenuName(epsilonRule.getMenuName());
         ruleMenuService.updateById(ruleMenu);
         return RuleMenuConvert.INSTANCE.convert(ruleMenu);
+    }
+
+    @Override
+    @Transactional
+    public void validate(EpsilonGraphVo epsilonGraph) {
+        EpsilonRule epsilonRule = getById(epsilonGraph.getRuleId());
+        List<EpsilonNodeVo> nodes = epsilonGraph.getNodes();
+
+        // 获取El表达式
+        String el = new EpsilonGraphParser(epsilonGraph).parse().toEL(true);
+
+        // 保存 epsilonScript 注意这里要忽略 STARTNODE 节点
+        List<EpsilonScript> scriptList = nodes.stream().filter(i -> !NodeTypeEnum.STARTNODE.getKey().equals(i.getShape())).map(EpsilonNodeConvert.INSTANCE::convertToScript).toList();
+        scriptService.saveBatch(scriptList);
+
+        // 保存 epsilonChain
+        EpsilonChain epsilonChain = EpsilonRuleConvert.INSTANCE.convertToChain(epsilonRule);
+        epsilonChain.setElData(el);
+        epsilonChain.setEnable(false);
+        chainService.save(epsilonChain);
+
+        // 更新图信息
+        updateGraph(epsilonGraph);
+
+        // 更新 epsilonRule
+        epsilonRule.setValidated(true);
+        updateById(epsilonRule);
     }
 }

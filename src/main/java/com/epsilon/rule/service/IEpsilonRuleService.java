@@ -17,4 +17,6 @@ public interface IEpsilonRuleService extends IService<EpsilonRule> {
     EpsilonRuleVo selectRule(Integer ruleId);
 
     RuleMenuVo saveOrUpdateRule(EpsilonRuleVo epsilonRule);
+
+    void validate(EpsilonGraphVo epsilonGraph);
 }

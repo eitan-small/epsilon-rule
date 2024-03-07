@@ -53,4 +53,10 @@ public class EpsilonRuleController {
         System.out.println(el);
         return CommonResult.success(el);
     }
+
+    @PostMapping("/validate")
+    public CommonResult<String> validate(@RequestBody EpsilonGraphVo epsilonGraph) {
+        epsilonRuleService.validate(epsilonGraph);
+        return CommonResult.success();
+    }
 }
