@@ -85,6 +85,12 @@
             <artifactId>liteflow-script-graaljs</artifactId>
             <version>${liteflow.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.yomahub</groupId>
+            <artifactId>liteflow-el-builder</artifactId>
+            <version>${liteflow.version}</version>
+        </dependency>
+
 
         <!-- 工具类相关依赖 -->
         <dependency>

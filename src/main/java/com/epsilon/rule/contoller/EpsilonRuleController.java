@@ -2,6 +2,7 @@ package com.epsilon.rule.contoller;
 
 import com.epsilon.rule.domain.CommonResult;
 import com.epsilon.rule.domain.vo.*;
+import com.epsilon.rule.parser.EpsilonGraphParser;
 import com.epsilon.rule.service.IEpsilonRuleService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,12 @@ public class EpsilonRuleController {
     @PostMapping("saveOrUpdate")
     public CommonResult<RuleMenuVo> saveOrUpdateRule(@RequestBody EpsilonRuleVo epsilonRule) {
         return CommonResult.success(epsilonRuleService.saveOrUpdateRule(epsilonRule));
+    }
+
+    @PostMapping("/buildEL")
+    public CommonResult<String> buildEL(@RequestBody EpsilonGraphVo epsilonGraph) {
+        String el = new EpsilonGraphParser(epsilonGraph).parse().toEL(true);
+        System.out.println(el);
+        return CommonResult.success(el);
     }
 }
