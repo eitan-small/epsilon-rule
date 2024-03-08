@@ -11,7 +11,7 @@
  Target Server Version : 80034
  File Encoding         : 65001
 
- Date: 06/03/2024 20:06:14
+ Date: 08/03/2024 08:47:43
 */
 
 SET NAMES utf8mb4;
@@ -134,13 +134,14 @@ CREATE TABLE `epsilon_rule`  (
   `updated_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '更新人',
   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`rule_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of epsilon_rule
 -- ----------------------------
 INSERT INTO `epsilon_rule` VALUES (1, '0cc9c75127c44ddabadee0d8a106c985', '判断是否进行信贷客户实地检查', 0, 0, NULL, NULL, NULL, NULL, 0);
 INSERT INTO `epsilon_rule` VALUES (2, '3e9838674b4a4fe0bc7cb367d3144052', '根据客户信息判断检查频率', 0, 0, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `epsilon_rule` VALUES (3, '6daa351fc80040f69195c7d9d73f1b7f', '', 0, 0, NULL, NULL, NULL, NULL, 0);
 
 -- ----------------------------
 -- Table structure for epsilon_script
@@ -186,12 +187,13 @@ CREATE TABLE `rule_menu`  (
   `updated_by` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '更新人',
   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rule_menu
 -- ----------------------------
 INSERT INTO `rule_menu` VALUES (1, 1, '信贷客户实地检查', '2', 1, NULL, NULL, NULL, NULL, NULL, 0);
 INSERT INTO `rule_menu` VALUES (2, 1, '信贷客户实地检查频率', '2', 2, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `rule_menu` VALUES (3, 1, '测试新建规则', '2', 3, NULL, NULL, NULL, NULL, NULL, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
