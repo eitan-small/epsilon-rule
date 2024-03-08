@@ -14,6 +14,7 @@ import com.epsilon.rule.domain.entity.*;
 import com.epsilon.rule.domain.vo.*;
 import com.epsilon.rule.enums.MenuTypeEnum;
 import com.epsilon.rule.enums.NodeTypeEnum;
+import com.epsilon.rule.enums.ScriptTypeEnum;
 import com.epsilon.rule.exception.ServiceException;
 import com.epsilon.rule.mapper.EpsilonRuleMapper;
 import com.epsilon.rule.parser.EpsilonGraphParser;
@@ -194,17 +195,14 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
             // 删除 epsilonChain
             chainService.remove(new LambdaQueryWrapper<EpsilonChain>().eq(EpsilonChain::getChainName, rule.getChainName()));
             // 删除 epsilonScript
-            List<String> nodeIdList = nodeService.list(new LambdaQueryWrapper<EpsilonNode>().eq(EpsilonNode::getRuleId, ruleId))
-                    .stream().filter(i -> !NodeTypeEnum.STARTNODE.getKey().equals(i.getShape())).map(i -> i.getNodeId()).toList();
+            List<String> nodeIdList = nodeService.list(new LambdaQueryWrapper<EpsilonNode>().eq(EpsilonNode::getRuleId, ruleId)).stream().filter(i -> !NodeTypeEnum.START_NODE.getKey().equals(i.getShape())).map(i -> i.getNodeId()).toList();
             scriptService.remove(new LambdaQueryWrapper<EpsilonScript>().in(EpsilonScript::getScriptId, nodeIdList));
         } else {
-            chainService.update(new LambdaUpdateWrapper<EpsilonChain>().eq(EpsilonChain::getChainName, rule.getChainName())
-                    .set(EpsilonChain::getEnable, true));
+            chainService.update(new LambdaUpdateWrapper<EpsilonChain>().eq(EpsilonChain::getChainName, rule.getChainName()).set(EpsilonChain::getEnable, true));
         }
         updateById(rule);
 
-        LambdaQueryWrapper<RuleMenu> queryWrapper = new LambdaQueryWrapper<RuleMenu>()
-                .eq(RuleMenu::getRuleId, epsilonRule.getRuleId()).last("LIMIT 1");
+        LambdaQueryWrapper<RuleMenu> queryWrapper = new LambdaQueryWrapper<RuleMenu>().eq(RuleMenu::getRuleId, epsilonRule.getRuleId()).last("LIMIT 1");
         RuleMenu ruleMenu = ruleMenuService.getOne(queryWrapper);
         ruleMenu.setMenuName(epsilonRule.getMenuName());
         ruleMenuService.updateById(ruleMenu);
@@ -221,7 +219,13 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         String el = new EpsilonGraphParser(epsilonGraph).parse().toEL(true);
 
         // 保存 epsilonScript 注意这里要忽略 STARTNODE 节点
-        List<EpsilonScript> scriptList = nodes.stream().filter(i -> !NodeTypeEnum.STARTNODE.getKey().equals(i.getShape())).map(EpsilonNodeConvert.INSTANCE::convertToScript).toList();
+        List<EpsilonScript> scriptList = nodes.stream().filter(i -> !NodeTypeEnum.START_NODE.getKey().equals(i.getShape())).map(node -> {
+            EpsilonScript epsilonScript = EpsilonNodeConvert.INSTANCE.convertToScript(node);
+            if (NodeTypeEnum.SWITCH_NODE.getKey().equals(node.getShape())) {
+                epsilonScript.setScriptType(ScriptTypeEnum.SWITCH_SCRIPT.getKey());
+            }
+            return epsilonScript;
+        }).toList();
         scriptService.saveBatch(scriptList);
 
         // 保存 epsilonChain

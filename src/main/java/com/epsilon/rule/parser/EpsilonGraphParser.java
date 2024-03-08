@@ -56,7 +56,7 @@ public class EpsilonGraphParser {
 
         EpsilonNodeVo node = nodeMap.get(currentId);
         List<EpsilonEdgeVo> neighbours = sourceNodeToEdgesMap.get(currentId);
-        if (NodeTypeEnum.SWITCHNODE.getKey().equals(node.getShape())) {
+        if (NodeTypeEnum.SWITCH_NODE.getKey().equals(node.getShape())) {
             return ELBus.switchOpt(currentId).to(neighbours.stream().map(i -> doBuild(i.getTargetId())).toArray());
         }
 
@@ -65,7 +65,7 @@ public class EpsilonGraphParser {
         while (!CollectionUtils.isEmpty(neighbours)) {
             String targetId = neighbours.get(0).getTargetId();
             EpsilonNodeVo targetNode = nodeMap.get(targetId);
-            if (NodeTypeEnum.SWITCHNODE.getKey().equals(targetNode.getShape())) {
+            if (NodeTypeEnum.SWITCH_NODE.getKey().equals(targetNode.getShape())) {
                 thenList.add(doBuild(targetId));
                 break;
             } else {
@@ -77,13 +77,9 @@ public class EpsilonGraphParser {
         return ELBus.then(thenList.toArray()).id(currentId);
     }
 
-    public static void main(String[] args) {
-        ELBus.then("a");
-    }
-
     private EpsilonNodeVo validateGraph(List<EpsilonNodeVo> nodes, List<EpsilonEdgeVo> edges) {
         // 只允许有一个start-node
-        List<EpsilonNodeVo> startNodes = nodes.stream().filter(i -> NodeTypeEnum.STARTNODE.getKey().equals(i.getShape())).toList();
+        List<EpsilonNodeVo> startNodes = nodes.stream().filter(i -> NodeTypeEnum.START_NODE.getKey().equals(i.getShape())).toList();
         if (startNodes.size() != 1) {
             throw new ServiceException(String.format("验证失败：期望有一个开始节点，但找到了 %d 个。", startNodes.size()));
         }
