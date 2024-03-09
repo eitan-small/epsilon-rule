@@ -180,22 +180,9 @@
         </filter>
     </appender>
 
-    <!--root配置必须在appender下边-->
-    <!--root节点是对所有appender的管理,添加哪个appender就会打印哪个appender的日志-->
-    <!--root节点的level是总的日志级别控制,如果appender的日志级别设定比root的高,会按照appender的日志级别打印日志,-->
-    <!--如果appender的日志级别比root的低,会按照root设定的日志级别进行打印日志-->
-    <!--也就是说root设定的日志级别是最低限制,如果root设定级别为最高ERROR,那么所有appender只能打印最高级别的日志-->
-    <root level="INFO">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="DEBUG_FILE" />
-        <appender-ref ref="INFO_FILE" />
-        <appender-ref ref="WARN_FILE" />
-        <appender-ref ref="ERROR_FILE" />
-    </root>
-
     <!--配置多环境日志输出  可以在application.properties中配置选择哪个profiles : spring.profiles.active=dev-->
     <!--生产环境:输出到文件-->
-    <springProfile name="pro">
+    <springProfile name="prod">
         <root level="info">
             <appender-ref ref="DEBUG_FILE" />
             <appender-ref ref="INFO_FILE" />
@@ -205,7 +192,7 @@
     </springProfile>
     <!--开发环境:打印控制台-->
     <springProfile name="dev">
-        <root level="debug">
+        <root level="info">
             <appender-ref ref="STDOUT" />
         </root>
     </springProfile>
