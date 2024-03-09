@@ -1,0 +1,205 @@
+2024-03-09 13:09:54.530 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - Starting EpsilonRuleApplicationTests using Java 17.0.8 with PID 17856 (started by EITAN in E:\workspace\epsilon-rule)
+2024-03-09 13:09:54.532 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2024-03-09 13:09:55.869 [main] INFO  com.yomahub.liteflow.util.LOGOPrinter - 
+================================================================================================
+		 _     ___ _____ _____      _____ _     _____        __
+		| |   |_ _|_   _| ____|    |  ___| |   / _ \ \      / /
+		| |    | |  | | |  _| _____| |_  | |  | | | \ \ /\ / / 
+		| |___ | |  | | | |__|_____|  _| | |__| |_| |\ V  V /  
+		|_____|___| |_| |_____|    |_|   |_____\___/  \_/\_/   
+
+		Version: 2.11.4.2
+		Keep on the light side.
+		website：https://liteflow.cc
+		wechat：bryan_31
+================================================================================================
+
+2024-03-09 13:09:56.739 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2024-03-09 13:09:57.053 [main] INFO  com.yomahub.liteflow.core.FlowExecutor - flow info loaded from class config with el,class=com.yomahub.liteflow.parser.sql.SQLXmlELParser
+2024-03-09 13:09:57.091 [main] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT chain_name,el_data FROM epsilon_chain WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:09:57.092 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-03-09 13:09:57.395 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@28dacf31
+2024-03-09 13:09:57.398 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-03-09 13:09:57.436 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:09:57.451 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:09:57.454 [main] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT script_id,script_data,script_name,script_type,script_language FROM epsilon_script WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:09:57.455 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:09:57.520 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[4884f8a27ece4e3ead56e5a0b306279d(取所有频率的最小值)]
+2024-03-09 13:09:57.826 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[94f35fab86554bb1b5fde760437e4538(转化基础频率)]
+2024-03-09 13:09:57.827 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[76ad329700174191b1f8b77579155e50(结束节点)]
+2024-03-09 13:09:57.827 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[33e1b261f7d5409f9a44fcff6b25cdf7(判断是否执行)]
+2024-03-09 13:09:57.827 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[2732c1f9a80d4f24ab56bead1b25651a(结束节点)]
+2024-03-09 13:09:57.828 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[c1e6cefa5a4d47b6b1f5173a5ff9acb4(转化影响频率等级)]
+2024-03-09 13:09:57.828 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[c9e562455bc84fc2bf777baa5361fc16(影响频率因素)]
+2024-03-09 13:09:57.866 [SQL-Polling-1] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT chain_name,el_data FROM epsilon_chain WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:09:57.868 [SQL-Polling-2] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:09:57.868 [SQL-Polling-1] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:09:57.869 [SQL-Polling-2] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT script_id,script_data,script_name,script_type,script_language FROM epsilon_script WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:09:57.870 [SQL-Polling-2] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:09:57.886 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - Started EpsilonRuleApplicationTests in 3.741 seconds (process running for 4.709)
+2024-03-09 13:09:58.859 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-03-09 13:09:58.864 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-03-09 13:27:38.803 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - Starting EpsilonRuleApplicationTests using Java 17.0.8 with PID 17748 (started by EITAN in E:\workspace\epsilon-rule)
+2024-03-09 13:27:38.804 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2024-03-09 13:27:40.143 [main] INFO  com.yomahub.liteflow.util.LOGOPrinter - 
+================================================================================================
+		 _     ___ _____ _____      _____ _     _____        __
+		| |   |_ _|_   _| ____|    |  ___| |   / _ \ \      / /
+		| |    | |  | | |  _| _____| |_  | |  | | | \ \ /\ / / 
+		| |___ | |  | | | |__|_____|  _| | |__| |_| |\ V  V /  
+		|_____|___| |_| |_____|    |_|   |_____\___/  \_/\_/   
+
+		Version: 2.11.4.2
+		Keep on the light side.
+		website：https://liteflow.cc
+		wechat：bryan_31
+================================================================================================
+
+2024-03-09 13:27:40.974 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2024-03-09 13:27:41.280 [main] INFO  com.yomahub.liteflow.core.FlowExecutor - flow info loaded from class config with el,class=com.yomahub.liteflow.parser.sql.SQLXmlELParser
+2024-03-09 13:27:41.316 [main] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT chain_name,el_data FROM epsilon_chain WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:27:41.318 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-03-09 13:27:41.499 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@18a0721b
+2024-03-09 13:27:41.501 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-03-09 13:27:41.532 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:27:41.547 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:27:41.548 [main] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT script_id,script_data,script_name,script_type,script_language FROM epsilon_script WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:27:41.550 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:27:41.610 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[4884f8a27ece4e3ead56e5a0b306279d(取所有频率的最小值)]
+2024-03-09 13:27:41.871 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[94f35fab86554bb1b5fde760437e4538(转化基础频率)]
+2024-03-09 13:27:41.872 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[76ad329700174191b1f8b77579155e50(结束节点)]
+2024-03-09 13:27:41.872 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[33e1b261f7d5409f9a44fcff6b25cdf7(判断是否执行)]
+2024-03-09 13:27:41.873 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[2732c1f9a80d4f24ab56bead1b25651a(结束节点)]
+2024-03-09 13:27:41.873 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[c1e6cefa5a4d47b6b1f5173a5ff9acb4(转化影响频率等级)]
+2024-03-09 13:27:41.874 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[c9e562455bc84fc2bf777baa5361fc16(影响频率因素)]
+2024-03-09 13:27:41.916 [SQL-Polling-1] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT chain_name,el_data FROM epsilon_chain WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:27:41.918 [SQL-Polling-2] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:27:41.918 [SQL-Polling-1] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:27:41.919 [SQL-Polling-2] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT script_id,script_data,script_name,script_type,script_language FROM epsilon_script WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:27:41.920 [SQL-Polling-2] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:27:41.935 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - Started EpsilonRuleApplicationTests in 3.479 seconds (process running for 4.346)
+2024-03-09 13:27:42.943 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-03-09 13:27:42.952 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-03-09 13:37:42.000 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - Starting EpsilonRuleApplicationTests using Java 17.0.8 with PID 12564 (started by EITAN in E:\workspace\epsilon-rule)
+2024-03-09 13:37:42.001 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2024-03-09 13:37:43.365 [main] INFO  com.yomahub.liteflow.util.LOGOPrinter - 
+================================================================================================
+		 _     ___ _____ _____      _____ _     _____        __
+		| |   |_ _|_   _| ____|    |  ___| |   / _ \ \      / /
+		| |    | |  | | |  _| _____| |_  | |  | | | \ \ /\ / / 
+		| |___ | |  | | | |__|_____|  _| | |__| |_| |\ V  V /  
+		|_____|___| |_| |_____|    |_|   |_____\___/  \_/\_/   
+
+		Version: 2.11.4.2
+		Keep on the light side.
+		website：https://liteflow.cc
+		wechat：bryan_31
+================================================================================================
+
+2024-03-09 13:37:44.227 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2024-03-09 13:37:44.542 [main] INFO  com.yomahub.liteflow.core.FlowExecutor - flow info loaded from class config with el,class=com.yomahub.liteflow.parser.sql.SQLXmlELParser
+2024-03-09 13:37:44.579 [main] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT chain_name,el_data FROM epsilon_chain WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:37:44.581 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-03-09 13:37:44.754 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4c6fc3e7
+2024-03-09 13:37:44.757 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-03-09 13:37:44.788 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:37:44.803 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:37:44.805 [main] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT script_id,script_data,script_name,script_type,script_language FROM epsilon_script WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:37:44.806 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:37:44.859 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[4884f8a27ece4e3ead56e5a0b306279d(取所有频率的最小值)]
+2024-03-09 13:37:45.104 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[94f35fab86554bb1b5fde760437e4538(转化基础频率)]
+2024-03-09 13:37:45.105 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[76ad329700174191b1f8b77579155e50(结束节点)]
+2024-03-09 13:37:45.105 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[33e1b261f7d5409f9a44fcff6b25cdf7(判断是否执行)]
+2024-03-09 13:37:45.106 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[2732c1f9a80d4f24ab56bead1b25651a(结束节点)]
+2024-03-09 13:37:45.107 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[c1e6cefa5a4d47b6b1f5173a5ff9acb4(转化影响频率等级)]
+2024-03-09 13:37:45.108 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[c9e562455bc84fc2bf777baa5361fc16(影响频率因素)]
+2024-03-09 13:37:45.153 [SQL-Polling-1] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT chain_name,el_data FROM epsilon_chain WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:37:45.154 [SQL-Polling-1] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:37:45.156 [SQL-Polling-2] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:37:45.159 [SQL-Polling-2] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT script_id,script_data,script_name,script_type,script_language FROM epsilon_script WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 13:37:45.161 [SQL-Polling-2] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 13:37:45.173 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - Started EpsilonRuleApplicationTests in 3.673 seconds (process running for 4.788)
+2024-03-09 13:37:46.257 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-03-09 13:37:46.266 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-03-09 14:28:00.796 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - Starting EpsilonRuleApplicationTests using Java 17.0.8 with PID 19192 (started by EITAN in E:\workspace\epsilon-rule)
+2024-03-09 14:28:00.797 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2024-03-09 14:28:01.994 [main] INFO  com.yomahub.liteflow.util.LOGOPrinter - 
+================================================================================================
+		 _     ___ _____ _____      _____ _     _____        __
+		| |   |_ _|_   _| ____|    |  ___| |   / _ \ \      / /
+		| |    | |  | | |  _| _____| |_  | |  | | | \ \ /\ / / 
+		| |___ | |  | | | |__|_____|  _| | |__| |_| |\ V  V /  
+		|_____|___| |_| |_____|    |_|   |_____\___/  \_/\_/   
+
+		Version: 2.11.4.2
+		Keep on the light side.
+		website：https://liteflow.cc
+		wechat：bryan_31
+================================================================================================
+
+2024-03-09 14:28:02.767 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2024-03-09 14:28:03.049 [main] INFO  com.yomahub.liteflow.core.FlowExecutor - flow info loaded from class config with el,class=com.yomahub.liteflow.parser.sql.SQLXmlELParser
+2024-03-09 14:28:03.084 [main] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT chain_name,el_data FROM epsilon_chain WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 14:28:03.086 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-03-09 14:28:03.235 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3ec7eb5
+2024-03-09 14:28:03.238 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-03-09 14:28:03.277 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 14:28:03.291 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 14:28:03.293 [main] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT script_id,script_data,script_name,script_type,script_language FROM epsilon_script WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 14:28:03.294 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 14:28:03.348 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[4884f8a27ece4e3ead56e5a0b306279d(取所有频率的最小值)]
+2024-03-09 14:28:03.571 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[94f35fab86554bb1b5fde760437e4538(转化基础频率)]
+2024-03-09 14:28:03.572 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[76ad329700174191b1f8b77579155e50(结束节点)]
+2024-03-09 14:28:03.573 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[33e1b261f7d5409f9a44fcff6b25cdf7(判断是否执行)]
+2024-03-09 14:28:03.574 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[2732c1f9a80d4f24ab56bead1b25651a(结束节点)]
+2024-03-09 14:28:03.575 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[c1e6cefa5a4d47b6b1f5173a5ff9acb4(转化影响频率等级)]
+2024-03-09 14:28:03.576 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[c9e562455bc84fc2bf777baa5361fc16(影响频率因素)]
+2024-03-09 14:28:03.612 [SQL-Polling-1] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT chain_name,el_data FROM epsilon_chain WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 14:28:03.613 [SQL-Polling-1] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 14:28:03.613 [SQL-Polling-2] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 14:28:03.614 [SQL-Polling-2] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT script_id,script_data,script_name,script_type,script_language FROM epsilon_script WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 14:28:03.616 [SQL-Polling-2] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 14:28:03.626 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - Started EpsilonRuleApplicationTests in 3.241 seconds (process running for 4.282)
+2024-03-09 14:28:04.553 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-03-09 14:28:04.562 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-03-09 15:11:33.297 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - Starting EpsilonRuleApplicationTests using Java 17.0.8 with PID 9824 (started by EITAN in E:\workspace\epsilon-rule)
+2024-03-09 15:11:33.299 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2024-03-09 15:11:34.431 [main] INFO  com.yomahub.liteflow.util.LOGOPrinter - 
+================================================================================================
+		 _     ___ _____ _____      _____ _     _____        __
+		| |   |_ _|_   _| ____|    |  ___| |   / _ \ \      / /
+		| |    | |  | | |  _| _____| |_  | |  | | | \ \ /\ / / 
+		| |___ | |  | | | |__|_____|  _| | |__| |_| |\ V  V /  
+		|_____|___| |_| |_____|    |_|   |_____\___/  \_/\_/   
+
+		Version: 2.11.4.2
+		Keep on the light side.
+		website：https://liteflow.cc
+		wechat：bryan_31
+================================================================================================
+
+2024-03-09 15:11:35.245 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2024-03-09 15:11:35.520 [main] INFO  com.yomahub.liteflow.core.FlowExecutor - flow info loaded from class config with el,class=com.yomahub.liteflow.parser.sql.SQLXmlELParser
+2024-03-09 15:11:35.561 [main] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT chain_name,el_data FROM epsilon_chain WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 15:11:35.562 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-03-09 15:11:35.721 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2ae2fa13
+2024-03-09 15:11:35.724 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-03-09 15:11:35.761 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 15:11:35.777 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 15:11:35.779 [main] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT script_id,script_data,script_name,script_type,script_language FROM epsilon_script WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 15:11:35.780 [main] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 15:11:35.837 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[4884f8a27ece4e3ead56e5a0b306279d(取所有频率的最小值)]
+2024-03-09 15:11:36.154 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[94f35fab86554bb1b5fde760437e4538(转化基础频率)]
+2024-03-09 15:11:36.155 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[76ad329700174191b1f8b77579155e50(结束节点)]
+2024-03-09 15:11:36.156 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[33e1b261f7d5409f9a44fcff6b25cdf7(判断是否执行)]
+2024-03-09 15:11:36.156 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[2732c1f9a80d4f24ab56bead1b25651a(结束节点)]
+2024-03-09 15:11:36.158 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[c1e6cefa5a4d47b6b1f5173a5ff9acb4(转化影响频率等级)]
+2024-03-09 15:11:36.159 [main] INFO  com.yomahub.liteflow.core.ScriptCommonComponent - load script for component[c9e562455bc84fc2bf777baa5361fc16(影响频率因素)]
+2024-03-09 15:11:36.208 [SQL-Polling-1] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT chain_name,el_data FROM epsilon_chain WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 15:11:36.210 [SQL-Polling-2] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 15:11:36.212 [SQL-Polling-2] INFO  c.yomahub.liteflow.parser.sql.read.AbstractSqlRead - query sql: SELECT script_id,script_data,script_name,script_type,script_language FROM epsilon_script WHERE application_name='epsilon-rule' AND enable=true
+2024-03-09 15:11:36.214 [SQL-Polling-2] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 15:11:36.216 [SQL-Polling-1] INFO  c.y.liteflow.parser.sql.util.LiteFlowJdbcUtil - use dataSourceName[dataSource],has found liteflow config
+2024-03-09 15:11:36.233 [main] INFO  com.epsilon.rule.EpsilonRuleApplicationTests - Started EpsilonRuleApplicationTests in 3.343 seconds (process running for 4.224)
+2024-03-09 15:11:37.231 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-03-09 15:11:37.240 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
