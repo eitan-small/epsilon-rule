@@ -25,6 +25,7 @@ import com.yomahub.liteflow.flow.entity.CmpStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -164,8 +165,6 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
     @Override
     @Transactional
     public RuleMenuVo saveOrUpdateRule(EpsilonRuleVo epsilonRule) {
-        Map<String, Object> resp = new HashMap<>();
-
         Integer ruleId = epsilonRule.getRuleId();
         if (ruleId == null) {
             // 新建规则和目录
@@ -189,19 +188,18 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         rule.setRuleDesc(epsilonRule.getRuleDesc());
         rule.setEnable(epsilonRule.getEnable());
         // 将规则停用时
-        if (!epsilonRule.getEnable()) {
+        if (epsilonRule.getEnable()) {
+            if (!rule.getValidated()) {
+                throw new ServiceException("未校验的规则不能启用");
+            }
+        } else {
             // 重置校验状态
             rule.setValidated(false);
-            // 删除 epsilonChain
-            chainService.remove(new LambdaQueryWrapper<EpsilonChain>().eq(EpsilonChain::getChainName, rule.getChainName()));
-            // 删除 epsilonScript
-            List<String> nodeIdList = nodeService.list(new LambdaQueryWrapper<EpsilonNode>().eq(EpsilonNode::getRuleId, ruleId)).stream().filter(i -> !NodeTypeEnum.START_NODE.getKey().equals(i.getShape())).map(i -> i.getNodeId()).toList();
-            scriptService.remove(new LambdaQueryWrapper<EpsilonScript>().in(EpsilonScript::getScriptId, nodeIdList));
-        } else {
-            chainService.update(new LambdaUpdateWrapper<EpsilonChain>().eq(EpsilonChain::getChainName, rule.getChainName()).set(EpsilonChain::getEnable, true));
         }
         updateById(rule);
+        chainService.update(new LambdaUpdateWrapper<EpsilonChain>().eq(EpsilonChain::getChainName, rule.getChainName()).set(EpsilonChain::getEnable, epsilonRule.getEnable()));
 
+        // 更新规则名
         LambdaQueryWrapper<RuleMenu> queryWrapper = new LambdaQueryWrapper<RuleMenu>().eq(RuleMenu::getRuleId, epsilonRule.getRuleId()).last("LIMIT 1");
         RuleMenu ruleMenu = ruleMenuService.getOne(queryWrapper);
         ruleMenu.setMenuName(epsilonRule.getMenuName());
@@ -217,6 +215,15 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
 
         // 获取El表达式
         String el = new EpsilonGraphParser(epsilonGraph).parse().toEL(true);
+
+        // 删除 epsilonChain
+        chainService.remove(new LambdaQueryWrapper<EpsilonChain>().eq(EpsilonChain::getChainName, epsilonRule.getChainName()));
+        // 删除 epsilonScript
+        List<EpsilonNode> nodeList = nodeService.list(new LambdaQueryWrapper<EpsilonNode>().eq(EpsilonNode::getRuleId, epsilonRule.getRuleId()));
+        List<String> nodeIdList = nodeList.stream().filter(i -> !NodeTypeEnum.START_NODE.getKey().equals(i.getShape())).map(EpsilonNode::getNodeId).toList();
+        if (!CollectionUtils.isEmpty(nodeIdList)) {
+            scriptService.remove(new LambdaQueryWrapper<EpsilonScript>().in(EpsilonScript::getScriptId, nodeIdList));
+        }
 
         // 保存 epsilonScript 注意这里要忽略 STARTNODE 节点
         List<EpsilonScript> scriptList = nodes.stream().filter(i -> !NodeTypeEnum.START_NODE.getKey().equals(i.getShape())).map(node -> {
