@@ -103,7 +103,6 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
             stepDetail.setEndTime(step.getEndTime());
             stepDetail.setTimeSpent(step.getTimeSpent());
             stepDetail.setSuccess(step.isSuccess());
-            stepDetail.setException(step.getException());
             stepDetail.setRollbackTimeSpent(step.getRollbackTimeSpent());
             return stepDetail;
         }).collect(Collectors.toCollection(LinkedList::new));

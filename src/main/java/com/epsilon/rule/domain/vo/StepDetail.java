@@ -1,14 +1,17 @@
 package com.epsilon.rule.domain.vo;
 
-import com.yomahub.liteflow.core.NodeComponent;
 import com.yomahub.liteflow.enums.CmpStepTypeEnum;
-import com.yomahub.liteflow.flow.element.Node;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class StepDetail {
+public class StepDetail implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private String nodeId;
 
     private String nodeName;
@@ -26,10 +29,6 @@ public class StepDetail {
 
     // 是否成功
     private boolean success;
-
-    // 有exception，success一定为false
-    // 但是success为false，不一定有exception，因为有可能没执行到，或者没执行结束(any)
-    private Exception exception;
 
     // 回滚消耗的时间
     private Long rollbackTimeSpent;
