@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.epsilon.rule.context.InputContext;
 import com.epsilon.rule.context.OutputContext;
 import com.epsilon.rule.convert.edge.EpsilonEdgeConvert;
-import com.epsilon.rule.convert.menu.RuleMenuConvert;
+import com.epsilon.rule.convert.menu.EpsilonMenuConvert;
 import com.epsilon.rule.convert.node.EpsilonNodeConvert;
 import com.epsilon.rule.convert.rule.EpsilonRuleConvert;
 import com.epsilon.rule.domain.CommonResult;
@@ -38,14 +38,14 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
 
     private final IEpsilonEdgeService edgeService;
 
-    private final IRuleMenuService ruleMenuService;
+    private final IEpsilonMenuService ruleMenuService;
 
     private final IEpsilonChainService chainService;
 
     private final IEpsilonScriptService scriptService;
 
     @Autowired
-    public EpsilonRuleServiceImpl(FlowExecutor flowExecutor, IEpsilonNodeService nodeService, IEpsilonEdgeService edgeService, IRuleMenuService ruleMenuService, IEpsilonChainService chainService, IEpsilonScriptService scriptService) {
+    public EpsilonRuleServiceImpl(FlowExecutor flowExecutor, IEpsilonNodeService nodeService, IEpsilonEdgeService edgeService, IEpsilonMenuService ruleMenuService, IEpsilonChainService chainService, IEpsilonScriptService scriptService) {
         this.flowExecutor = flowExecutor;
         this.nodeService = nodeService;
         this.edgeService = edgeService;
@@ -152,10 +152,10 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         EpsilonRuleVo ruleVo = EpsilonRuleConvert.INSTANCE.convert(rule);
 
         // 查询规则菜单
-        RuleMenu ruleMenu = ruleMenuService.selectRuleMenu(ruleId);
-        if (ruleMenu != null) {
-            ruleVo.setMenuName(ruleMenu.getMenuName());
-            ruleVo.setProjectId(ruleMenu.getProjectId());
+        EpsilonMenu epsilonMenu = ruleMenuService.selectRuleMenu(ruleId);
+        if (epsilonMenu != null) {
+            ruleVo.setMenuName(epsilonMenu.getMenuName());
+            ruleVo.setProjectId(epsilonMenu.getProjectId());
         }
 
         return ruleVo;
@@ -163,7 +163,7 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
 
     @Override
     @Transactional
-    public RuleMenuVo saveOrUpdateRule(EpsilonRuleVo epsilonRule) {
+    public EpsilonMenuVo saveOrUpdateRule(EpsilonRuleVo epsilonRule) {
         Integer ruleId = epsilonRule.getRuleId();
         if (ruleId == null) {
             // 新建规则和目录
@@ -172,15 +172,15 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
             rule.setRuleDesc(epsilonRule.getRuleDesc());
             save(rule);
 
-            RuleMenu ruleMenu = new RuleMenu();
+            EpsilonMenu epsilonMenu = new EpsilonMenu();
 
-            ruleMenu.setProjectId(epsilonRule.getProjectId());
-            ruleMenu.setMenuName(epsilonRule.getMenuName());
-            ruleMenu.setMenuType(MenuTypeEnum.FILE.getKey());
-            ruleMenu.setRuleId(rule.getRuleId());
-            ruleMenuService.save(ruleMenu);
+            epsilonMenu.setProjectId(epsilonRule.getProjectId());
+            epsilonMenu.setMenuName(epsilonRule.getMenuName());
+            epsilonMenu.setMenuType(MenuTypeEnum.FILE.getKey());
+            epsilonMenu.setRuleId(rule.getRuleId());
+            ruleMenuService.save(epsilonMenu);
 
-            return RuleMenuConvert.INSTANCE.convert(ruleMenu);
+            return EpsilonMenuConvert.INSTANCE.convert(epsilonMenu);
         }
 
         EpsilonRule rule = getById(ruleId);
@@ -199,11 +199,11 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         chainService.update(new LambdaUpdateWrapper<EpsilonChain>().eq(EpsilonChain::getChainName, rule.getChainName()).set(EpsilonChain::getEnable, epsilonRule.getEnable()));
 
         // 更新规则名
-        LambdaQueryWrapper<RuleMenu> queryWrapper = new LambdaQueryWrapper<RuleMenu>().eq(RuleMenu::getRuleId, epsilonRule.getRuleId()).last("LIMIT 1");
-        RuleMenu ruleMenu = ruleMenuService.getOne(queryWrapper);
-        ruleMenu.setMenuName(epsilonRule.getMenuName());
-        ruleMenuService.updateById(ruleMenu);
-        return RuleMenuConvert.INSTANCE.convert(ruleMenu);
+        LambdaQueryWrapper<EpsilonMenu> queryWrapper = new LambdaQueryWrapper<EpsilonMenu>().eq(EpsilonMenu::getRuleId, epsilonRule.getRuleId()).last("LIMIT 1");
+        EpsilonMenu epsilonMenu = ruleMenuService.getOne(queryWrapper);
+        epsilonMenu.setMenuName(epsilonRule.getMenuName());
+        ruleMenuService.updateById(epsilonMenu);
+        return EpsilonMenuConvert.INSTANCE.convert(epsilonMenu);
     }
 
     @Override

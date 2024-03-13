@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class RuleMenuVo implements Serializable {
+public class EpsilonMenuVo implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -45,5 +45,5 @@ public class RuleMenuVo implements Serializable {
     /**
      * 子节点
      */
-    private List<RuleMenuVo> children;
+    private List<EpsilonMenuVo> children;
 }

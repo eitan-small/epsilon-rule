@@ -7,9 +7,6 @@ import com.epsilon.rule.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 /**
  * <p>
  * 
@@ -20,8 +17,8 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@TableName("rule_menu")
-public class RuleMenu extends BaseEntity {
+@TableName("epsilon_menu")
+public class EpsilonMenu extends BaseEntity {
 
     /**
      * 菜单ID
@@ -43,6 +40,11 @@ public class RuleMenu extends BaseEntity {
      * 菜单类型 1:目录 | 2:文件
      */
     private String menuType;
+
+    /**
+     * 菜单种类 1:规则菜单 | 2:模型菜单
+     */
+    private String menuCategory;
 
     /**
      * 规则ID，关联到特定的规则
