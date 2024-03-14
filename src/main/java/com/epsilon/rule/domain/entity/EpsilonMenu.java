@@ -47,9 +47,9 @@ public class EpsilonMenu extends BaseEntity {
     private String menuCategory;
 
     /**
-     * 规则ID，关联到特定的规则
+     * 规则ID，关联到特定的规则或模型
      */
-    private Integer ruleId;
+    private Integer associateId;
 
     /**
      * 父菜单ID，指向上级菜单的ID

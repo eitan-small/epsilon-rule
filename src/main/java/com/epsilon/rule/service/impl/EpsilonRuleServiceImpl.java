@@ -177,7 +177,7 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
             epsilonMenu.setProjectId(epsilonRule.getProjectId());
             epsilonMenu.setMenuName(epsilonRule.getMenuName());
             epsilonMenu.setMenuType(MenuTypeEnum.FILE.getKey());
-            epsilonMenu.setRuleId(rule.getRuleId());
+            epsilonMenu.setAssociateId(rule.getRuleId());
             ruleMenuService.save(epsilonMenu);
 
             return EpsilonMenuConvert.INSTANCE.convert(epsilonMenu);
@@ -200,7 +200,7 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
         chainService.update(new LambdaUpdateWrapper<EpsilonChain>().eq(EpsilonChain::getChainName, rule.getChainName()).set(EpsilonChain::getEnable, epsilonRule.getEnable()));
 
         // 更新规则名
-        LambdaQueryWrapper<EpsilonMenu> queryWrapper = new LambdaQueryWrapper<EpsilonMenu>().eq(EpsilonMenu::getRuleId, epsilonRule.getRuleId()).last("LIMIT 1");
+        LambdaQueryWrapper<EpsilonMenu> queryWrapper = new LambdaQueryWrapper<EpsilonMenu>().eq(EpsilonMenu::getAssociateId, epsilonRule.getRuleId()).last("LIMIT 1");
         EpsilonMenu epsilonMenu = ruleMenuService.getOne(queryWrapper);
         epsilonMenu.setMenuName(epsilonRule.getMenuName());
         ruleMenuService.updateById(epsilonMenu);

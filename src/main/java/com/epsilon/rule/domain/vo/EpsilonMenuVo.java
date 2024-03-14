@@ -35,7 +35,7 @@ public class EpsilonMenuVo implements Serializable {
     /**
      * 规则ID，关联到特定的规则
      */
-    private Integer ruleId;
+    private Integer associateId;
 
     /**
      * 父菜单ID，指向上级菜单的ID

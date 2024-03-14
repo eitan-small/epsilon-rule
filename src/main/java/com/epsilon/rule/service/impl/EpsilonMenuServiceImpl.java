@@ -46,7 +46,7 @@ public class EpsilonMenuServiceImpl extends ServiceImpl<EpsilonMenuMapper, Epsil
 
     @Override
     public EpsilonMenu selectRuleMenu(Integer ruleId) {
-        return new LambdaQueryChainWrapper<>(epsilonMenuMapper).eq(EpsilonMenu::getRuleId, ruleId).one();
+        return new LambdaQueryChainWrapper<>(epsilonMenuMapper).eq(EpsilonMenu::getAssociateId, ruleId).one();
     }
 
     private List<EpsilonMenuVo> buildMenuTree(List<EpsilonMenu> epsilonMenuList) {
