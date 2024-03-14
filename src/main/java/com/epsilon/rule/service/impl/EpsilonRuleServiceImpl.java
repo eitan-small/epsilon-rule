@@ -191,6 +191,7 @@ public class EpsilonRuleServiceImpl extends ServiceImpl<EpsilonRuleMapper, Epsil
             if (!rule.getValidated()) {
                 throw new ServiceException("未校验的规则不能启用");
             }
+            flowExecutor.reloadRule();
         } else {
             // 重置校验状态
             rule.setValidated(false);
