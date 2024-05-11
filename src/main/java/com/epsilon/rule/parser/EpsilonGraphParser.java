@@ -62,8 +62,7 @@ public class EpsilonGraphParser {
 
         List<Object> thenList = new ArrayList<>();
         thenList.add(currentId);
-        while (!CollectionUtils.isEmpty(neighbours)) {
-            String targetId = neighbours.get(0).getTargetId();
+        while (!CollectionUtils.isEmpty(neighbours)) { String targetId = neighbours.get(0).getTargetId();
             EpsilonNodeVo targetNode = nodeMap.get(targetId);
             if (NodeTypeEnum.SWITCH_NODE.getKey().equals(targetNode.getShape())) {
                 thenList.add(doBuild(targetId));
